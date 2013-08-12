@@ -1,0 +1,4 @@
+tests/code_samples/js1.js
+tests/code_samples/js1.js
+tests/code_samples/python_sample.py
+tests/code_samples/nsAccessibleWrap.cpp
