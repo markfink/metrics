@@ -1,6 +1,7 @@
 """Process command line arguments."""
 
 import sys
+import os
 from optparse import OptionParser, BadOptionError
 
 usage_str = """python metrics [ options ] pgm1.ex1 [ pgm2.ex2 ... ]
@@ -39,7 +40,8 @@ class ProcessArgs( object ):
         # default values for possible parameters
         lib_name = ''
         in_file_list = None
-        include_metrics_str = 'sloc:SLOCMetric,mccabe:McCabeMetric'
+        recurse_dir_list = None
+        self.include_metrics_str = 'sloc:SLOCMetric,mccabe:McCabeMetric'
         exclude_metrics_str = None
         quiet = False
         verbose = 0
@@ -57,6 +59,10 @@ class ProcessArgs( object ):
                           dest="in_file_list",
                           default=self.in_file_list,
                           help="File containing list of path names to modules for analysis." )
+        parser.add_option("-r", "--recurse-dir",
+                          dest="recurse_dir",
+                          default= None,
+                          help="Name of a directory to recurse into. (Default is '.')" )
         parser.add_option("-i", "--include",
                           dest="include_metrics_str",
                           default=self.include_metrics_str,
@@ -70,11 +76,11 @@ class ProcessArgs( object ):
                           dest="quiet",
                           default=self.quiet,
                           help="suppress normal summary output to stdout. (Default is %s)" % (self.quiet) )
-        # parser.add_option("-v", "--verbose",
-        #                   action="count",
-        #                   dest="verbose",
-        #                   default=self.verbose,
-        #                   help="Produce verbose output - more -v's produce more output. (Default is no verbose output to stdout)")
+        parser.add_option("-v", "--verbose",
+                          action="count",
+                          dest="verbose",
+                          default=self.verbose,
+                          help="Produce verbose output - more -v's produce more output. (Default is no verbose output to stdout)")
         parser.add_option("--format",
                           dest="output_format_str",
                           default = self.output_format,
@@ -112,6 +118,19 @@ class ProcessArgs( object ):
                 args.extend( files )
             except IOError, e:
                 raise ProcessArgsError( e )
+
+        exclude = ['.svn', '.hg', '.CVS', '.git']
+        if self.recurse_dir:
+          start = self.recurse_dir
+          print "Recurse %s" % (start)
+          for (root, dirs, files) in os.walk(start):
+            newfiles = []
+            for excl in exclude:
+              if excl in dirs:
+                dirs.remove(excl)
+            newfiles.extend([os.path.join(root, fn) for fn in files])
+            #print root, len(newfiles), 'Files found!'
+            args.extend(newfiles)
 
         self.in_file_names = args
 
