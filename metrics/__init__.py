@@ -5,4 +5,5 @@
     Copyright (c) 2005 by Reg. Charney <charney@charneyday.com>
     All rights reserved, see LICENSE for details.
 """
-__version__ = "0.2.6"
+__version__ = "0.2.6.sjb"
+

@@ -12,3 +12,8 @@ I currently have spent about two weeks working on the metrics package and I alre
 
 For more information on Tools and the Hitchhikers Guide to Test Automation please visit:
 http://www.testing-software.org/
+
+Extended 11th Aug 2014 Steve Barnes <gadgetsteve@hotmail.com>
+
+ - Added -r option to recurse directories.
+ - Verbose mode now outputs the file being processed.

@@ -53,12 +53,13 @@ def __import_metric_modules(include_metrics):
     metric_modules = {}
     for metric_name, _ in include_metrics:
         try:
+            print metric_name
             mod = __import_module(metric_name, metric_name)
             metric_modules[metric_name] = mod
             i += 1
         except ImportError:
             sys.stderr.write(
-                "Unable to import metric module %s -- ignored.\n\n" % mm)
+                "Unable to import metric module %s -- ignored.\n\n" % metric_name)
             # remove the erroneous metric module/class tuple
             del include_metrics[i]
 
@@ -87,13 +88,14 @@ def __instantiate_metric(metric_modules, context):
     metric_instance = {}
     inclIndx = -1
     for m, n in context['include_metrics']:
+        print m, n
         inclIndx += 1
         try:
             metric_instance[m] = None # default if metric class does not exist.
             metric_instance[m] = metric_modules[m].__dict__[n](context)
         except KeyError:
-            sys.stderr.write('Module %s does not contain metric class %s' + \
-                ' -- metric %s ignored.\n\n' % (m, n, m))
+            sys.stderr.write(
+                'Module %s does not contain metric class %s -- metric %s ignored.\n\n' % (m, n, m))
             del(metric_instance[m])
             del(context['include_metrics'][inclIndx])
 
@@ -138,11 +140,14 @@ def process(context):
     cm = ComputeMetrics(metric_instance, context)
 
     # main loop
+    total_files = len(context['in_file_names'])
     for i, in_file in enumerate(context['in_file_names']):
-        # print 'file %i: %s' % (i, in_file)
+        if context['verbose']:
+            print 'file %i/%i: %s' % (i + 1, total_files, in_file)
         try:
             cm.reset()
-            fin = open(os.path.join(context['base'], in_file), 'r')
+            filename = os.path.join(context['base'], in_file)
+            fin = open(filename, 'r')
             code = ''.join(fin.readlines())
             fin.close()
             # define lexographical scanner to use for this run
@@ -221,7 +226,7 @@ def summary(metric_instance, metrics, context):
     display_header(context, metric_instance, 'Files', '')
     display_separator(context, metric_instance, '-'*5, '')
     for m in summary:
-        display_metrics(context, metric_instance, '%5d' % 
+        display_metrics(context, metric_instance, '%5d' %
             summary[m]['file_count'], '', summary[m])
     display_separator(context, metric_instance, '-'*5, '')
     display_metrics(context, metric_instance, '%5d' % total['file_count'],
