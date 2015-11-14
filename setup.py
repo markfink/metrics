@@ -18,7 +18,7 @@ setup(
     author_email = 'mark@mark-fink.de',
     description = 'metrics produces metrics for C, C++, Javascript, and Python programs',
     long_description=open('README.md').read(),
-    url = 'https://github.com/metrics/',
+    url = 'https://github.com/markfink/metrics',
     download_url='http://pypi.python.org/pypi/metrics',
     name='metrics',
     version=__version__,
