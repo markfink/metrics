@@ -13,7 +13,7 @@ Another thing I wanted to mention is that I borrowed the sample programming lang
 
 ## Sample use
 
-Get an overview on a package (number of files, used languages, and metrics)
+Get an overview on a package (number of files, used languages, and metrics):
 
 ``` bash
 $ metrics **/*
@@ -21,19 +21,52 @@ Metrics Summary:
 Files                       Language        SLOC Comment McCabe 
 ----- ------------------------------ ----------- ------- ------ 
     6                              C          14       3      0 
-    1         JavaScript+Genshi Text           6       7      0 
-    2                           Java          27       8      1 
-   21                         Python        1082     488    231 
-    2                     JavaScript        1447      47    169 
     3                            C++        1114     236    108 
-    1                       markdown           5       0      0 
-   12                      Text only           0       0      0 
     1                            INI           5       0      0 
+    2                           Java          27       8      1 
+    3                     JavaScript        1453      54    169 
+    1                       markdown           7       0      0 
+   18                         Python        1038     425    238 
+   11                      Text only           0       0      0 
 ----- ------------------------------ ----------- ------- ------ 
-   49                          Total        3700     789    509
+   45                          Total        3658     726    516 
 ```
 
-Get a detailed report (pipe to file using > output.csv)
+Note how you can use glob file pattern or a list of files...
+
+
+Usage help:
+
+``` bash
+$ metrics --help
+Options:
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+  -f IN_FILE_LIST, --files=IN_FILE_LIST
+                        File containing list of path names to modules for
+                        analysis.
+  -i INCLUDE_METRICS_STR, --include=INCLUDE_METRICS_STR
+                        list of metrics to include in run. This is a comma
+                        separated list of metric module names with no
+                        whitespace. Optionally, you can specify the class name
+                        of the metric by following the module name with a
+                        colon (:) and the metric class name. (Default metrics
+                        are 'mccabe:McCabeMetric,sloc:SLOCMetric'. Default
+                        metric class name for metric module 'wxYz' is
+                        'WxYzMetric' when only module name given -- note
+                        capitalized metric class name.)
+  -l LIB_NAME, --library=LIB_NAME
+                        user-defined name applied to collection of modules
+                        (Default is '')
+  -q, --quiet           suppress normal summary output to stdout. (Default is
+                        False)
+  --format=OUTPUT_FORMAT_STR
+                        Choose an output format for a parser to read. Valid
+                        choices: xml, csv
+```
+
+
+Get a detailed report:
 
 ``` bash
 $ metrics -q --format=csv metrics/metrics.py
@@ -41,7 +74,8 @@ filename,mccabe,ratio_comment_to_code,language,comments,sloc
 metrics/metrics.py,24,0.39,Python,55,140
 ```
 
-Same detailed report but output to csv file)
+
+Same detailed report but output to csv file:
 
 ``` bash
 $ metrics -q --format=csv metrics/metrics.py > output.csv
