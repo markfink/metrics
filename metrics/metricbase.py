@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
 """Metric base class for new user-defined metrics."""
+from __future__ import unicode_literals
+
 
 class MetricBase(object):
     """Metric template class."""
@@ -16,4 +19,3 @@ class MetricBase(object):
     def get_metrics(self):
         """Return the current metrics as a dict"""
         pass
-

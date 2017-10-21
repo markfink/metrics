@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
 """Source Lines of Code (SLOC)
     This type of metric counts the lines but excludes empty lines and comments.
     In literature this is also referred as physical lines of code.
 """
+from __future__ import unicode_literals, print_function
+from collections import OrderedDict
 
-from metricbase import MetricBase
+from .metricbase import MetricBase
+
 
 token_types = [
     'Keyword',
@@ -11,12 +15,6 @@ token_types = [
     'Punctuation',
     'Operator',
     'Literal']
-# token_types = [
-#     b'Keyword',
-#     b'Name',
-#     b'Punctuation',
-#     b'Operator',
-#     b'Literal']
 
 
 class SLOCMetric(MetricBase):
@@ -31,11 +29,10 @@ class SLOCMetric(MetricBase):
         """Reset metric counter."""
         self.sloc = 0
         self.comments = 0
-        self.contains_code = False # does the current line contain code
+        self.contains_code = False  # does the current line contain code
 
     def process_token(self, tok):
         """count comments and non-empty lines that contain code"""
-        #print tok
         if(tok[0].__str__() in ('Token.Comment.Multiline', 'Token.Comment',
                 'Token.Literal.String.Doc')):
             self.comments += tok[1].count('\n')+1
@@ -57,16 +54,16 @@ class SLOCMetric(MetricBase):
 
     def display_header(self):
         """Display header for SLOC metric"""
-        print '%30s %11s %7s' % ('Language', 'SLOC', 'Comment'),
+        print('%30s %11s %7s' % ('Language', 'SLOC', 'Comment'), end=' ')
 
     def display_separator(self):
         """Display separator for SLOC metric"""
-        print '%s %s %s' % ('-'*30, '-'*11, '-'*7),
+        print('%s %s %s' % ('-'*30, '-'*11, '-'*7), end=' ')
 
     def display_metrics(self, metrics):
         """Display Source Lines of Code metric (SLOC) """
-        print '%30s %11d %7d' % (metrics['language'], metrics['sloc'], \
-            metrics['comments']),
+        print('%30s %11d %7d' % (metrics['language'], metrics['sloc'],
+            metrics['comments']), end=' ')
 
     def get_metrics(self):
         """Calculate ratio_comment_to_code and return with the other values"""
@@ -77,9 +74,8 @@ class SLOCMetric(MetricBase):
                 ratio_comment_to_code = 1.00
         else:
             ratio_comment_to_code = float(self.comments) / self.sloc
-        metrics = {'sloc': self.sloc, 'comments': self.comments,
-            'ratio_comment_to_code': round(ratio_comment_to_code, 2)}
+        metrics = OrderedDict([('sloc', self.sloc), ('comments', self.comments),
+                               ('ratio_comment_to_code', round(ratio_comment_to_code, 2))])
         return metrics
 
     metrics = property(get_metrics)
-

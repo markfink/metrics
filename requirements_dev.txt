@@ -1,0 +1,15 @@
+# this file contains additional dependencies
+# please list all dependencies necessary to test and build this package
+
+# test-tools
+pytest
+pytest-cov
+
+# build-tools
+setuptools>=36.3.0
+pep8>=1.7.0
+pylint>=1.7.2
+bumpversion>=0.5.3
+pypandoc>=1.4
+
+# misc

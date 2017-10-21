@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 """Process command line arguments."""
 
 import sys
@@ -16,24 +18,25 @@ Three types of output can be produced:
 Capitalized options negate the default option.
 """
 
+
 class MyOptionParser(OptionParser):
-  """Subclass OptionParser so I can override default error handler."""
-  def __init__( self, *args, **kwds ):
-    """Just call super class's __init__ since we aren't making changes here."""
-    OptionParser.__init__( self, *args, **kwds )
+    """Subclass OptionParser so I can override default error handler."""
 
-  def error( self, msg ):
-    """Explicitly raise BadOptionError so calling program can handle it."""
-    raise BadOptionError( msg )
+    def __init__( self, *args, **kwds ):
+        """Just call super class's __init__ since we aren't making changes here."""
+        OptionParser.__init__( self, *args, **kwds )
 
-class ProcessArgsError( Exception ): pass
+    def error(self, msg):
+        """Explicitly raise BadOptionError so calling program can handle it."""
+        raise BadOptionError(msg)
+
+
+class ProcessArgsError(Exception): pass
+
 
 class ProcessArgs( object ):
     """Process command line arguments."""
-    def __init__( self,
-                  *pArgs,
-                  **pKwds
-                ):
+    def __init__(self, *pArgs, **pKwds):
         """Initial processing of arguments."""
 
         # default values for possible parameters
@@ -70,11 +73,6 @@ class ProcessArgs( object ):
                           dest="quiet",
                           default=self.quiet,
                           help="suppress normal summary output to stdout. (Default is %s)" % (self.quiet) )
-        # parser.add_option("-v", "--verbose",
-        #                   action="count",
-        #                   dest="verbose",
-        #                   default=self.verbose,
-        #                   help="Produce verbose output - more -v's produce more output. (Default is no verbose output to stdout)")
         parser.add_option("--format",
                           dest="output_format_str",
                           default = self.output_format,
@@ -84,33 +82,24 @@ class ProcessArgs( object ):
         # parse the command line/arguments for this instance
         try:
             (options, args) = parser.parse_args()
-        except BadOptionError, e:
-            sys.stderr.writelines( "\nBadOptionError: %s\n" % str( e ) )
-            sys.stderr.writelines( "\nThe valid options are:\n\n" )
+        except BadOptionError as e:
+            sys.stderr.writelines("\nBadOptionError: %s\n" % str( e ))
+            sys.stderr.writelines("\nThe valid options are:\n\n")
             sys.stderr.writelines(parser.format_help())
-            sys.exit( 1 )
+            sys.exit(1)
 
-        print 'options: %s' % options
-        print 'args: %s' % args
-
-
-        # augment parameter values from instantiation with
-        #   command line values.
-        # the command line parameter values take precidence
-        #   over values in program.
-
-        args.extend( pArgs )
+        args.extend(pArgs)
 
         # convert command line arguments into instance values
-        self.__dict__.update( options.__dict__ )
+        self.__dict__.update( options.__dict__)
 
         if self.in_file_list:
             try:
-                inf = open( self.in_file_list )
+                inf = open(self.in_file_list)
                 files = [line.strip() for line in inf]
                 inf.close()
                 args.extend( files )
-            except IOError, e:
+            except IOError as e:
                 raise ProcessArgsError( e )
 
         self.in_file_names = args
@@ -122,8 +111,8 @@ class ProcessArgs( object ):
             self.output_format_str = self.output_format_str.upper()
 
         if len( args ) < 1:
-            print usage_str
-            print parser.format_help()
+            print(usage_str)
+            print(parser.format_help())
             e = "No souce filenames given.\n"
             # because of what I believe to be a bug in the doctest module,
             # which makes it mishandle exceptions, I have 'faked' the handling
@@ -132,17 +121,16 @@ class ProcessArgs( object ):
 #              print e
 #              return
 #            else:
-            raise ProcessArgsError( e )
-
+            raise ProcessArgsError(e)
 
     def conflict_handler(self, *args, **kwds):
-        print "args=%s" % args
-        print "kwds=%s" % kwds
+        print("args=%s" % args)
+        print("kwds=%s" % kwds)
 
     def process_include_metrics(self, include_metrics_str):
         include_metrics = []
         try:
-            metric_list = include_metrics_str.split( ',' )
+            metric_list = include_metrics_str.split(',')
             for a in metric_list:
                 s = a.split( ':' )
                 if len( s ) == 2:    # both metric class and module name given
@@ -154,18 +142,19 @@ class ProcessArgs( object ):
                     # class name for module wxYz is WxYzMetric.
                     if s[0]:
                         defName = s[0][0].upper() + s[0][1:] + 'Metric'
-                        include_metrics.append( (s[0], defName) )
+                        include_metrics.append((s[0], defName))
                     else:
                         raise ProcessArgsError("Missing metric module name")
                 else:
                     raise ProcessArgsError("Malformed items in includeMetric string")
-        except AttributeError, e:
-            e = ( "Invalid list of metric names: %s" %
+        except AttributeError as e:
+            e = ("Invalid list of metric names: %s" %
                 include_metrics_str )
             raise ProcessArgsError( e )
         return include_metrics
 
-def testpa( pa ):
+
+def testpa(pa):
     """Test of ProcessArgs.
 
     Usage:
@@ -183,17 +172,17 @@ def testpa( pa ):
       inFile.py
     >>>
     """
-    print """Arguments processed:
+    print("""Arguments processed:
 \tInclude Metric Modules=%s
 \tquiet=%s
 \tverbose=%s""" % (
         pa.include_metrics_str,
         pa.quiet,
-        pa.verbose)
-    print "Metrics to be used are:"
+        pa.verbose))
+    print("Metrics to be used are:")
     for m,n in pa.include_metrics:
-        print "\tModule %s contains metric class %s" % (m,n)
+        print("\tModule %s contains metric class %s" % (m,n))
     if pa.in_file_names:
-        print "Input files:"
+        print("Input files:")
         for f in pa.in_file_names:
-            print "\t%s" % f
+            print("\t%s" % f)

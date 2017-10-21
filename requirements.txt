@@ -1,0 +1,3 @@
+Pygments==2.2.0
+pathspec==0.5.3
+pathlib2>=2.3.0

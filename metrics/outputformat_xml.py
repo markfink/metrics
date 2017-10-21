@@ -1,9 +1,17 @@
+# -*- coding: utf-8 -*-
 """output in XML format.
 
     initial version 2010 by djcoin (https://bitbucket.org/djcoin)
     All rights reserved, see LICENSE for details.
 """
+from __future__ import unicode_literals
+import sys
+
 import xml.etree.ElementTree as ET
+
+
+PY3 = sys.version_info[0] >= 3
+
 
 def format(metrics):
     """compute output in XML format."""
@@ -34,4 +42,8 @@ def format(metrics):
                 {'name': name, 'value': str(metrics[key][name])})
 
     indent(root)
-    return ET.tostring(root)
+    if PY3:
+        body = ET.tostring(root, encoding='unicode')
+    else:
+        body = ET.tostring(root)
+    return body

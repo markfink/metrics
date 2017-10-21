@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 """Used to indicate that this is a Python module directory
 
     metrics - produce a variety of metrics from source code files

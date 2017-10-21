@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
 """Main computational modules for metrics."""
+from __future__ import unicode_literals
+from collections import OrderedDict
+
 
 class ComputeMetrics(object):
     """Class used to compute basic metrics for given file."""
@@ -9,7 +13,7 @@ class ComputeMetrics(object):
         self.context = context
         self.token = None
         self.process_token_subscribers = []
-        self.metrics = {}
+        self.metrics = OrderedDict()
         self.__init_metrics(metric_instance)
 
     def __extract_fqn(self, fqn, default='__main__'):
@@ -31,7 +35,7 @@ class ComputeMetrics(object):
 
         """
         for tok in token_list:
-            token_count = self.process_token(tok)
+            self.process_token(tok)
 
         # collect metrics from all members of metrics_instance
         for i in self.metric_instance:
