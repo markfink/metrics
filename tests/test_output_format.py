@@ -15,8 +15,6 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
     """Process file put the results into the metrics dictionary."""
     context = dict()  # context
     # moved the metrics list into context dict
-    context['include_metrics'] = [('mccabe', 'McCabeMetric'),
-                                  ('sloc', 'SLOCMetric')]
     context['quiet'] = True
     context['verbose'] = False
     context['root_dir'] = os.getcwd()
@@ -27,17 +25,17 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
 
     if fmt == 'csv':
         expected = \
-            'filename,mccabe,sloc,comments,ratio_comment_to_code,language\n' + \
-            '%s,%d,%d,%d,%s,%s\n' % (in_file, mccabe, sloc, comments, ratio, language)
+            'filename,sloc,comments,ratio_comment_to_code,mccabe,language\n' + \
+            '%s,%d,%d,%s,%d,%s\n' % (in_file, sloc, comments, ratio, mccabe, language)
 
     elif fmt == 'xml':
         expected = (
             '<files>\n' +
             '  <file language="%s" name="%s">\n' % (language, in_file) +
-            '    <metric name="mccabe" value="%d" />\n' % mccabe +
             '    <metric name="sloc" value="%d" />\n' % sloc +
             '    <metric name="comments" value="%d" />\n' % comments +
             '    <metric name="ratio_comment_to_code" value="%s" />\n' % ratio +
+            '    <metric name="mccabe" value="%d" />\n' % mccabe +
             '  </file>\n'
             '</files>\n')
 

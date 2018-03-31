@@ -16,8 +16,8 @@ def test_code_sample(in_file, sloc, comments, ratio, mccabe, language):
     """Process file put the results into the metrics dictionary."""
     context = dict()  # context
     # moved the metrics list into context dict
-    context['include_metrics'] = [('mccabe', 'McCabeMetric'), ('sloc',
-        'SLOCMetric')]
+    #context['include_metrics'] = [('mccabe', 'McCabeMetric'), ('sloc',
+    #    'SLOCMetric')]
     context['quiet'] = True
     context['verbose'] = False
     context['root_dir'] = os.getcwd()

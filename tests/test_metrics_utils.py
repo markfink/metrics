@@ -47,9 +47,9 @@ def test_exclude_file():
     ]
 
 
-def test_exclude_file_with_gcdtignore():
+def test_exclude_file_with_gitignore():
     result = glob_files(ROOT_DIR, ['a/**'],
-                        gcdtignore=['aa.txt'])
+                        gitignore=['aa.txt'])
     assert list(result) == [
         (ROOT_DIR + '/a/ab.txt', 'a/ab.txt')
     ]

@@ -4,7 +4,7 @@
 
 # metrics
 
-The original idea of metrics was a platform that can be extended with many different metrics. At the time I will focus only on SLOC and McCabe complexity metrics but keep its extensibility. *metrics* is build in a way to support many, many languages [supported languages](http://pygments.org/languages/). Currently we test support for C, C++, JavaScript, and Python.
+The original idea of metrics was a platform that can be extended with many different metrics. At the time I will focus only on SLOC and McCabe complexity metrics. *metrics* is build in a way to support many, many languages [supported languages](http://pygments.org/languages/). Currently we test support for C, C++, JavaScript, and Python.
 
 The SLOC metric counts the lines but excludes empty lines and comments. This is sometimes referred to as the *source lines of code* (SLOC). In literature this is often also referred as physical lines of code. I simplified it to something which to my understanding is the common denominator for the metric packages I looked into  (CCCC, SLOCCount, PyMetrics, Eclipse-Metrics, Ohcount). 
 
@@ -45,19 +45,6 @@ Options:
   -f IN_FILE_LIST, --files=IN_FILE_LIST
                         File containing list of path names to modules for
                         analysis.
-  -i INCLUDE_METRICS_STR, --include=INCLUDE_METRICS_STR
-                        list of metrics to include in run. This is a comma
-                        separated list of metric module names with no
-                        whitespace. Optionally, you can specify the class name
-                        of the metric by following the module name with a
-                        colon (:) and the metric class name. (Default metrics
-                        are 'mccabe:McCabeMetric,sloc:SLOCMetric'. Default
-                        metric class name for metric module 'wxYz' is
-                        'WxYzMetric' when only module name given -- note
-                        capitalized metric class name.)
-  -l LIB_NAME, --library=LIB_NAME
-                        user-defined name applied to collection of modules
-                        (Default is '')
   -q, --quiet           suppress normal summary output to stdout. (Default is
                         False)
   --format=OUTPUT_FORMAT_STR
@@ -70,8 +57,8 @@ Get a detailed report:
 
 ``` bash
 $ metrics -q --format=csv metrics/metrics.py
-filename,mccabe,ratio_comment_to_code,language,comments,sloc
-metrics/metrics.py,24,0.39,Python,55,140
+filename,sloc,comments,ratio_comment_to_code,mccabe,language
+metrics/metrics.py,21,14,0.67,1,Python
 ```
 
 
@@ -84,5 +71,5 @@ $ metrics -q --format=csv metrics/metrics.py > output.csv
 
 ## License
 
-Copyright (c) 2017 Fink Labs GmbH and others.
+Copyright (c) 2017, 2018 Fink Labs GmbH and others.
 metrics is released under the MIT License (see MIT_LICENSE).
