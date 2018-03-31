@@ -25,7 +25,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' no
 setup(
     name='metrics',
     version=__version__,
-    description='metrics produces metrics for C, C++, Javascript, and Python programs',
+    description='metrics for C, C++, Javascript, and Python programs',
     long_description=long_description,
     license='MIT',
     url='https://github.com/finklabs/metrics/',
