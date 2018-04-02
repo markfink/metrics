@@ -2,27 +2,26 @@
 from __future__ import unicode_literals
 import textwrap
 
-from pygments.lexers.web import JavascriptLexer
 from pygments.token import Token
 
+from metrics.position import PosMetric
 
-def test_lexer_on_javascript_class():
-    code = textwrap.dedent('''
-        class User {
-          constructor(name) {
-            this.name = name;
-          }
-        
-          sayHi() {
-            alert(this.name);
-          }
-        
-        }
-        
-        let user = new User("John");
-        user.sayHi();
-        ''')
-    result = [
+
+def test_with_javascript_class():
+    #class User {
+    #  constructor(name) {
+    #    this.name = name;
+    #  }
+    #
+    #  sayHi() {
+    #    alert(this.name);
+    #  }
+    #
+    #}
+    #
+    #let user = new User("John");
+    #user.sayHi();
+    tokens = [
         (Token.Keyword.Reserved, 'class'),  # <--
         (Token.Text, ' '),
         (Token.Name.Other, 'User'),
@@ -88,7 +87,10 @@ def test_lexer_on_javascript_class():
         (Token.Text, '\n')
     ]
 
-    lex = JavascriptLexer()
-    tokenList = lex.get_tokens(code)
-    # print(list(tokenList))
-    assert list(tokenList) == result
+    positions = PosMetric(context={})
+    positions.language = 'Javascript'
+    for t in tokens:
+        positions.process_token(t)
+    assert positions.metrics == [
+        {'type': 'Class', 'name': 'User', 'start': 1, 'end': 10}
+    ]

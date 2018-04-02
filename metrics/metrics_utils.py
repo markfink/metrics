@@ -13,6 +13,7 @@ from .sloc import SLOCMetric
 from .mccabe import McCabeMetric
 from . import outputformat_csv
 from . import outputformat_xml
+from . import outputformat_json
 
 
 PYTHON_VERSION = sys.version[:3]
@@ -83,6 +84,8 @@ def format(metrics, format):
         formatter = outputformat_xml
     elif format.lower() == 'csv':
         formatter = outputformat_csv
+    elif format.lower() == 'json':
+        formatter = outputformat_json
     else:
         raise ValueError('unknown format: %s', format)
 
@@ -106,13 +109,15 @@ def process(context):
             try:
                 lex = guess_lexer_for_filename(in_file, code, encoding='guess')
                 # encoding is 'guess', chardet', 'utf-8'
+                print(type(lex))
+                print(lex.name)
             except:
                 pass
             else:
                 token_list = lex.get_tokens(code)  # parse code
 
                 metrics[key] = OrderedDict()
-                metrics[key].update(compute_metrics(processors, token_list))
+                metrics[key].update(compute_metrics(lex.name, processors, token_list))
                 metrics[key]['language'] = lex.name
 
         except IOError as e:

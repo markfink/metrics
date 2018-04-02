@@ -1,28 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import textwrap
 
-from pygments.lexers.compiled import GoLexer
 from pygments.token import Token
+from metrics.position import PosMetric
 
 
 def test_lexer_on_go_code():
-    code = textwrap.dedent('''
-        type Animal interface {
-          Name() string
-        }
-
-        type Dog struct {}
-
-        func (d *Dog) Name() string {
-          return “Dog”
-        }
-
-        func (d *Dog) Bark() {
-          fmt.Println(“Woof!”)
-        }
-        ''')
-    result = [
+    # type Animal interface {
+    #  Name() string
+    # }
+    #
+    # type Dog struct {}
+    #
+    # func (d *Dog) Name() string {
+    #  return “Dog”
+    # }
+    #
+    # func (d *Dog) Bark() {
+    #  fmt.Println(“Woof!”)
+    # }
+    tokens = [
         (Token.Keyword.Declaration, 'type'),  # <--
         (Token.Text, ' '),
         (Token.Name.Other, 'Animal'),
@@ -107,7 +104,30 @@ def test_lexer_on_go_code():
         (Token.Punctuation, '}'),
         (Token.Text, '\n')]
 
-    lex = GoLexer()
-    tokenList = lex.get_tokens(code)
-    # print(list(tokenList))
-    assert list(tokenList) == result
+    positions = PosMetric(context={})
+    positions.language = 'Go'
+    for t in tokens:
+        positions.process_token(t)
+    assert positions.metrics == [
+        {'type': 'Interface', 'name': 'Animal', 'start': 1, 'end': 3},
+        {'type': 'Struct', 'name': 'Dog', 'start': 5, 'end': 5},
+        {'type': 'Function', 'name': 'Name', 'start': 7, 'end': 9},
+        {'type': 'Function', 'name': 'Bark', 'start': 11, 'end': 13}
+    ]
+
+'''
+1   # type Animal interface {
+2   #  Name() string
+3   # }
+4   #
+5   # type Dog struct {}
+6   #
+7   # func (d *Dog) Name() string {
+8   #  return “Dog”
+9   # }
+0   #
+1   # func (d *Dog) Bark() {
+2   #  fmt.Println(“Woof!”)
+3   # }
+'''
+

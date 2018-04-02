@@ -10,6 +10,7 @@ from metrics.metrics import process, format
 @pytest.mark.parametrize('in_file, fmt, sloc, comments, ratio, mccabe, language', [
     ('tests/resources/code_samples/js1.js', 'csv', 1446, 46, 0.03, 169, 'JavaScript'),
     ('tests/resources/code_samples/js1.js', 'xml', 1446, 46, 0.03, 169, 'JavaScript'),
+    ('tests/resources/code_samples/js1.js', 'json', 1446, 46, 0.03, 169, 'JavaScript'),
 ])
 def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
     """Process file put the results into the metrics dictionary."""
@@ -38,6 +39,18 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
             '    <metric name="mccabe" value="%d" />\n' % mccabe +
             '  </file>\n'
             '</files>\n')
+
+    elif fmt == 'json':
+        expected = (
+            '{\n' +
+            '    "tests/resources/code_samples/js1.js": {\n' +
+            '        "comments": 46,\n' +
+            '        "language": "JavaScript",\n' +
+            '        "mccabe": 169,\n' +
+            '        "ratio_comment_to_code": 0.03,\n' +
+            '        "sloc": 1446\n' +
+            '    }\n' +
+            '}\n')
 
     print(format(result, fmt))
     assert format(result, fmt) == expected

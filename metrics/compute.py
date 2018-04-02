@@ -4,14 +4,15 @@ from __future__ import unicode_literals
 from collections import OrderedDict
 
 
-def compute_metrics(processors, token_list):
-    """use processors to compute the various metrics.
+def compute_metrics(language, processors, token_list):
+    """use processors to compute the metrics.
     """
     metrics = OrderedDict()
 
     # reset all processors
     for p in processors:
         p.reset()
+        p.language = language
 
     # process all tokens
     for tok in token_list:

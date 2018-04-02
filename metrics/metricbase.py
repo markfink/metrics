@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 
 class MetricBase(object):
     """Metric template class."""
+    _language = None
+
     def __init__( self, *args, **kwds ):
         pass
 
