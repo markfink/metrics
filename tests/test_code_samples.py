@@ -4,7 +4,10 @@ import os
 
 import pytest
 
-from metrics.metrics import process
+from metrics.metrics_utils import process_files
+from metrics.sloc import SLOCMetric
+from metrics.mccabe import McCabeMetric
+from metrics.position import PosMetric
 
 
 @pytest.mark.parametrize('in_file, sloc, comments, ratio, mccabe, language', [
@@ -24,7 +27,9 @@ def test_code_sample(in_file, sloc, comments, ratio, mccabe, language):
     context['in_file_names'] = [in_file]
     context['output_format'] = None
 
-    result = process(context)
+
+    file_processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)]
+    result = process_files(context, file_processors)
     first_key = list(result.keys())[0]
     first_value = list(result.values())[0]
     assert first_key == in_file

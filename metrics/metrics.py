@@ -17,7 +17,11 @@ import sys
 import os
 
 from .processargs import ProcessArgs, ProcessArgsError
-from .metrics_utils import process, format
+from .metrics_utils import process_files, summary, format
+from .sloc import SLOCMetric
+from .mccabe import McCabeMetric
+from .position import PosMetric
+from .plugins import load_plugins
 
 
 PYTHON_VERSION = sys.version[:3]
@@ -32,10 +36,17 @@ def main():
         context['quiet'] = pa.quiet
         context['verbose'] = pa.verbose
         context['output_format'] = pa.output_format_str
-        metrics = process(context)
+
+        file_processors, build_processors = load_plugins()
+        file_processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)] + file_processors
+
+        file_metrics = process_files(context, file_processors)
+
+        if not context['quiet']:
+            summary(file_processors, file_metrics, context)
 
         if context['output_format'] is not None:
-            print(format(metrics, context['output_format']))
+            print(format(file_metrics, context['output_format']))
     except ProcessArgsError as e:
         sys.stderr.writelines(str(e))
     sys.exit(0)

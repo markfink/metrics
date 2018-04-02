@@ -9,9 +9,6 @@ from pathlib2 import PurePath, Path
 from pygments.lexers import guess_lexer_for_filename
 
 from .compute import compute_metrics
-from .sloc import SLOCMetric
-from .mccabe import McCabeMetric
-from .position import PosMetric
 from . import outputformat_csv
 from . import outputformat_xml
 from . import outputformat_json
@@ -93,10 +90,9 @@ def format(metrics, format):
     return formatter.format(metrics)
 
 
-def process(context):
+def process_files(context, file_processors):
     """Main routine for metrics."""
-    metrics = OrderedDict()
-    processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)]
+    file_metrics = OrderedDict()
 
     # TODO make available the includes and excludes feature
     in_files = glob_files(context['root_dir'], context['in_file_names'])
@@ -115,37 +111,34 @@ def process(context):
             else:
                 token_list = lex.get_tokens(code)  # parse code
 
-                metrics[key] = OrderedDict()
-                metrics[key].update(compute_metrics(lex.name, processors, token_list))
-                metrics[key]['language'] = lex.name
+                file_metrics[key] = OrderedDict()
+                file_metrics[key].update(compute_metrics(lex.name, file_processors, token_list))
+                file_metrics[key]['language'] = lex.name
 
         except IOError as e:
             sys.stderr.writelines(str(e) + " -- Skipping input file.\n\n")
 
-    if not context['quiet']:
-        summary(processors, metrics, context)
-
-    return metrics
+    return file_metrics#, build_metrics
 
 
 def summary(processors, metrics, context):
     """Print the summary"""
     # display aggregated metric values on language level
-    def display_header(processor, before='', after=''):
+    def display_header(processors, before='', after=''):
         """Display the header for the summary results."""
         print(before, end=' ')
         for processor in processors:
             processor.display_header()
         print(after)
 
-    def display_separator(processor, before='', after=''):
+    def display_separator(processors, before='', after=''):
         """Display the header for the summary results."""
         print(before, end=' ')
         for processor in processors:
             processor.display_separator()
         print(after)
 
-    def display_metrics(processor, before='', after='', metrics=[]):
+    def display_metrics(processors, before='', after='', metrics=[]):
         """Display the header for the summary results."""
         print(before, end=' ')
         for processor in processors:
