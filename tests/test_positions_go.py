@@ -108,26 +108,9 @@ def test_lexer_on_go_code():
     positions.language = 'Go'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == [
+    assert positions.metrics == {'positions': [
         {'type': 'Interface', 'name': 'Animal', 'start': 1, 'end': 3},
         {'type': 'Struct', 'name': 'Dog', 'start': 5, 'end': 5},
         {'type': 'Function', 'name': 'Name', 'start': 7, 'end': 9},
         {'type': 'Function', 'name': 'Bark', 'start': 11, 'end': 13}
-    ]
-
-'''
-1   # type Animal interface {
-2   #  Name() string
-3   # }
-4   #
-5   # type Dog struct {}
-6   #
-7   # func (d *Dog) Name() string {
-8   #  return “Dog”
-9   # }
-0   #
-1   # func (d *Dog) Bark() {
-2   #  fmt.Println(“Woof!”)
-3   # }
-'''
-
+    ]}

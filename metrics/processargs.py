@@ -68,7 +68,7 @@ class ProcessArgs( object ):
         parser.add_option("--format",
                           dest="output_format_str",
                           default = self.output_format,
-                          choices = ["xml", "csv"],
+                          choices = ["xml", "csv", "json"],
                           help="Choose an output format for a parser to read. Valid choices: xml, csv")
 
         # parse the command line/arguments for this instance

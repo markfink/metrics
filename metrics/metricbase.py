@@ -14,8 +14,16 @@ class MetricBase(object):
         """Handle processing for each token."""
         pass
 
-    def display(self):
+    def display_header(self):
+        """Display the metric header for the processed file."""
+        pass
+
+    def display_metrics(self, metrics):
         """Display the metric for the processed file."""
+        pass
+
+    def display_separator(self):
+        """Display the metric separator for the processed file."""
         pass
 
     def get_metrics(self):

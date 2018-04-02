@@ -11,6 +11,7 @@ from pygments.lexers import guess_lexer_for_filename
 from .compute import compute_metrics
 from .sloc import SLOCMetric
 from .mccabe import McCabeMetric
+from .position import PosMetric
 from . import outputformat_csv
 from . import outputformat_xml
 from . import outputformat_json
@@ -95,7 +96,7 @@ def format(metrics, format):
 def process(context):
     """Main routine for metrics."""
     metrics = OrderedDict()
-    processors = [SLOCMetric(context), McCabeMetric(context)]
+    processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)]
 
     # TODO make available the includes and excludes feature
     in_files = glob_files(context['root_dir'], context['in_file_names'])
@@ -109,8 +110,6 @@ def process(context):
             try:
                 lex = guess_lexer_for_filename(in_file, code, encoding='guess')
                 # encoding is 'guess', chardet', 'utf-8'
-                print(type(lex))
-                print(lex.name)
             except:
                 pass
             else:
@@ -161,7 +160,7 @@ def summary(processors, metrics, context):
             summary[lang] = {'file_count': 0, 'language': lang}
         summary[lang]['file_count'] += 1
         for i in metrics[m]:
-            if i == 'language':
+            if i in ['language', 'positions']:
                 continue
             if not has_key:
                 summary[lang][i] = 0

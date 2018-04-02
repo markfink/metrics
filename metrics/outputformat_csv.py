@@ -8,15 +8,18 @@ from __future__ import unicode_literals
 
 def format(metrics):
     """compute output in CSV format."""
+    # filter out positions metric
     def report_header(metrics):
         values = list(metrics.values())[0]
-        return 'filename,' + ','.join(values) + '\n'  # metrics[metrics.keys()[0]]
+        print(values)
+        values.pop('positions', None)
+        return 'filename,' + ','.join(values) + '\n'
 
     def report_metrics(metrics):
         report = ''
-        for key, values in metrics.items():  #.keys():
+        for key, values in metrics.items():
             report += key + ','
-            report += ','.join([str(m) for m in values.values()])  #  metrics[metric].values()
+            report += ','.join([str(v) for k, v in values.items() if k not in ['positions']])
             report += '\n'
         return report
 

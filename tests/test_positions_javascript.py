@@ -91,6 +91,6 @@ def test_with_javascript_class():
     positions.language = 'Javascript'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == [
+    assert positions.metrics == {'positions': [
         {'type': 'Class', 'name': 'User', 'start': 1, 'end': 10}
-    ]
+    ]}
