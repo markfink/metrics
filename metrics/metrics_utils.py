@@ -102,7 +102,7 @@ def process_files(context, file_processors):
         try:
             with open(in_file, 'rb') as ifile:
                 code = ifile.read()
-            # lookup lexographical scanner to use for this run
+            # lookup lexicographical scanner to use for this run
             try:
                 lex = guess_lexer_for_filename(in_file, code, encoding='guess')
                 # encoding is 'guess', chardet', 'utf-8'
@@ -112,7 +112,7 @@ def process_files(context, file_processors):
                 token_list = lex.get_tokens(code)  # parse code
 
                 file_metrics[key] = OrderedDict()
-                file_metrics[key].update(compute_metrics(lex.name, file_processors, token_list))
+                file_metrics[key].update(compute_metrics(file_processors, lex.name, key, token_list))
                 file_metrics[key]['language'] = lex.name
 
         except IOError as e:

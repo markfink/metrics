@@ -39,8 +39,9 @@ def main():
         context['output_format'] = pa.output_format_str
 
         file_processors, build_processors = load_plugins()
-        file_processors = [SLOCMetric(context), McCabeMetric(context),
-                           PosMetric(context)] + file_processors
+        file_processors = \
+            [SLOCMetric(context), McCabeMetric(context), PosMetric(context)] + \
+            [p(context) for p in file_processors]
 
         file_metrics = process_files(context, file_processors)
         build_metrics = {}  # not exactly metrics but hopefully useful

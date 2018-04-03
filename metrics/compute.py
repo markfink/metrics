@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 """Main computational modules for metrics."""
 from __future__ import unicode_literals
+import itertools
 from collections import OrderedDict
 
 
-def compute_metrics(language, processors, token_list):
+def compute_metrics(processors, language, key, token_list):
     """use processors to compute the metrics.
     """
+    # multiply iterator
+    tli = itertools.tee(token_list, len(processors))
     metrics = OrderedDict()
 
     # reset all processors
     for p in processors:
         p.reset()
-        p.language = language
 
     # process all tokens
-    for tok in token_list:
-        for p in processors:
-            p.process_token(tok)
+    for p, tl in zip(processors, tli):
+        p.process_file(language, key, tl)
 
     # collect metrics from all processors
     for p in processors:

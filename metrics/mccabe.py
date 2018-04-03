@@ -31,12 +31,12 @@ class McCabeMetric(MetricBase):
 
     def reset(self):
         """Reset metric counter."""
-        self.metrics = OrderedDict(mccabe=0)
+        self._metrics = OrderedDict(mccabe=0)
 
     def process_token(self, tok):
         """Increment number of decision points in function."""
         if (tok[0][0] == 'Keyword') and tok[1] in mccabe_keywords:
-            self.metrics['mccabe'] += 1
+            self._metrics['mccabe'] += 1
 
     def display_header(self):
         """Display header for McCabe Cyclomatic Complexity """
@@ -51,5 +51,6 @@ class McCabeMetric(MetricBase):
         print('%6d' % metrics['mccabe'], end=' ')
 
     def get_metrics(self):
-        return self.metrics
+        return self._metrics
 
+    metrics = property(get_metrics)
