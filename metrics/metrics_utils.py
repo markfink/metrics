@@ -77,7 +77,7 @@ def glob_files(root_dir, includes=None, excludes=None, gitignore=None):
             yield (str(m), str(m.relative_to(root_dir)))
 
 
-def format(metrics, format):
+def format(file_metrics, build_metrics, format):
     if format.lower() == 'xml':
         formatter = outputformat_xml
     elif format.lower() == 'csv':
@@ -87,7 +87,7 @@ def format(metrics, format):
     else:
         raise ValueError('unknown format: %s', format)
 
-    return formatter.format(metrics)
+    return formatter.format(file_metrics, build_metrics)
 
 
 def process_files(context, file_processors):

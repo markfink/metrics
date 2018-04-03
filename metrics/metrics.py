@@ -5,6 +5,7 @@
     PyMetrics by Reg. Charney to do Python complexity measurements.
     Simplified and reduced functionality by Mark Fink
 
+    Copyright (c) 2018 by Mark Fink
     Copyright (c) 2017 by Fink Labs GmbH
     Copyright (c) 2010 by Mark Fink
     Copyright (c) 2007 by Reg. Charney <charney@charneyday.com>
@@ -38,15 +39,17 @@ def main():
         context['output_format'] = pa.output_format_str
 
         file_processors, build_processors = load_plugins()
-        file_processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)] + file_processors
+        file_processors = [SLOCMetric(context), McCabeMetric(context),
+                           PosMetric(context)] + file_processors
 
         file_metrics = process_files(context, file_processors)
+        build_metrics = {}  # not exactly metrics but hopefully useful
 
         if not context['quiet']:
             summary(file_processors, file_metrics, context)
 
         if context['output_format'] is not None:
-            print(format(file_metrics, context['output_format']))
+            print(format(file_metrics, build_metrics, context['output_format']))
     except ProcessArgsError as e:
         sys.stderr.writelines(str(e))
     sys.exit(0)

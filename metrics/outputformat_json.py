@@ -3,14 +3,13 @@
     All rights reserved, see LICENSE for details.
 """
 from __future__ import unicode_literals
-import sys
 import json
 
 
-PY3 = sys.version_info[0] >= 3
-
-
-def format(metrics):
-    """compute output in XML format."""
+def format(file_metrics, build_metrics):
+    """compute output in JSON format."""
+    metrics = {'files': file_metrics}
+    if build_metrics:
+        metrics['build'] = build_metrics
     body = json.dumps(metrics, sort_keys=True, indent=4) + '\n'
     return body

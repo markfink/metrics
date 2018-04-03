@@ -35,28 +35,32 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
 
     elif fmt == 'xml':
         expected = (
-            '<files>\n' +
-            '  <file language="%s" name="%s">\n' % (language, in_file) +
-            '    <metric name="sloc" value="%d" />\n' % sloc +
-            '    <metric name="comments" value="%d" />\n' % comments +
-            '    <metric name="ratio_comment_to_code" value="%s" />\n' % ratio +
-            '    <metric name="mccabe" value="%d" />\n' % mccabe +
-            '    <metric name="positions" value="[]" />\n' +
-            '  </file>\n'
-            '</files>\n')
+           '<metrics>\n' +
+           '  <files>\n' +
+           '    <file language="JavaScript" name="tests/resources/code_samples/js1.js">\n' +
+           '      <metric name="sloc" value="1446" />\n' +
+           '      <metric name="comments" value="46" />\n' +
+           '      <metric name="ratio_comment_to_code" value="0.03" />\n' +
+           '      <metric name="mccabe" value="169" />\n' +
+           '      <metric name="positions" value="[]" />\n' +
+           '    </file>\n' +
+           '  </files>\n' +
+           '</metrics>\n')
 
     elif fmt == 'json':
         expected = (
             '{\n' +
-            '    "tests/resources/code_samples/js1.js": {\n' +
-            '        "comments": 46,\n' +
-            '        "language": "JavaScript",\n' +
-            '        "mccabe": 169,\n' +
-            '        "positions": [],\n' +
-            '        "ratio_comment_to_code": 0.03,\n' +
-            '        "sloc": 1446\n' +
+            '    "files": {\n' +
+            '        "tests/resources/code_samples/js1.js": {\n' +
+            '            "comments": 46,\n' +
+            '            "language": "JavaScript",\n' +
+            '            "mccabe": 169,\n' +
+            '            "positions": [],\n' +
+            '            "ratio_comment_to_code": 0.03,\n' +
+            '            "sloc": 1446\n' +
+            '        }\n' +
             '    }\n' +
             '}\n')
 
-    print(format(result, fmt))
-    assert format(result, fmt) == expected
+    print(format(result, {}, fmt))
+    assert format(result, {}, fmt) == expected
