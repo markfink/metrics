@@ -18,14 +18,12 @@ import sys
 import os
 
 from .processargs import ProcessArgs, ProcessArgsError
-from .metrics_utils import process_files, summary, format
+from .metrics_utils import process_files, summary, format, load_metrics_from_file
 from .sloc import SLOCMetric
 from .mccabe import McCabeMetric
 from .position import PosMetric
 from .plugins import load_plugins
-
-
-PYTHON_VERSION = sys.version[:3]
+from . import METRICS_FILENAME
 
 
 def main():
@@ -37,6 +35,7 @@ def main():
         context['quiet'] = pa.quiet
         context['verbose'] = pa.verbose
         context['output_format'] = pa.output_format_str
+        context['last_metrics'] = load_metrics_from_file(METRICS_FILENAME)
 
         file_processors, build_processors = load_plugins()
         file_processors = \
@@ -51,6 +50,10 @@ def main():
 
         if context['output_format'] is not None:
             print(format(file_metrics, build_metrics, context['output_format']))
+
+        # save to .metrics file
+        with open(METRICS_FILENAME, 'w') as ofile:
+            ofile.write(format(file_metrics, build_metrics, 'json'))
     except ProcessArgsError as e:
         sys.stderr.writelines(str(e))
     sys.exit(0)

@@ -25,3 +25,4 @@ distribute*.gz
 
 # Single Files
 .coverage
+.metrics

@@ -8,3 +8,5 @@ from __future__ import unicode_literals
     All rights reserved, see LICENSE for details.
 """
 __version__ = "0.2.8"
+
+METRICS_FILENAME = '.metrics'

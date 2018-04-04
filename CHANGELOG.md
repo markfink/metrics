@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### [0.3.0] - 2018-08-08
 #### Added
 - positions of functions and classes per file for JS, Go, Python, C++
-- new json output 
+- new JSON output 
 - improved plugin mechanism (now manage plugins via pip)
+- saves metrics to .metrics file by default (in JSON format)
+- load info from last run to context so plugins can use it
 #### Changed
 - XML output: moved "files" -element and new "build" -element under "metrics" 
 #### Removed

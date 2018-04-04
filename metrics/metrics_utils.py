@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
 import sys
+import json
 import logging
 from collections import OrderedDict
 
@@ -14,8 +15,20 @@ from . import outputformat_xml
 from . import outputformat_json
 
 
-PYTHON_VERSION = sys.version[:3]
 log = logging.getLogger(__name__)
+
+
+def load_metrics_from_file(filename):
+    try:
+        with open(filename, 'r') as ifile:
+            metrics = json.load(ifile)
+            if 'files' not in metrics:
+                metrics['files'] = {}
+            if 'build' not in metrics:
+                metrics['build'] = {}
+            return metrics
+    except FileNotFoundError:
+        return None
 
 
 # based on: https://github.com/finklabs/botodeploy/blob/master/botodeploy/utils_static.py
@@ -153,7 +166,7 @@ def summary(processors, metrics, context):
             summary[lang] = {'file_count': 0, 'language': lang}
         summary[lang]['file_count'] += 1
         for i in metrics[m]:
-            if i in ['language', 'positions']:
+            if i not in ['sloc', 'comments', 'mccabe']:  # include metrics to be used
                 continue
             if not has_key:
                 summary[lang][i] = 0
