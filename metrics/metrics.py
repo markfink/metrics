@@ -18,7 +18,8 @@ import sys
 import os
 
 from .processargs import ProcessArgs, ProcessArgsError
-from .metrics_utils import process_files, summary, format, load_metrics_from_file
+from .metrics_utils import process_file_metrics, process_build_metrics, summary, \
+    format, load_metrics_from_file
 from .sloc import SLOCMetric
 from .mccabe import McCabeMetric
 from .position import PosMetric
@@ -41,9 +42,11 @@ def main():
         file_processors = \
             [SLOCMetric(context), McCabeMetric(context), PosMetric(context)] + \
             [p(context) for p in file_processors]
+        build_processors = [p(context) for p in build_processors]
 
-        file_metrics = process_files(context, file_processors)
-        build_metrics = {}  # not exactly metrics but hopefully useful
+        file_metrics = process_file_metrics(context, file_processors)
+        # build_metrics are not exactly metrics but hopefully useful
+        build_metrics = process_build_metrics(context, build_processors)
 
         if not context['quiet']:
             summary(file_processors, file_metrics, context)

@@ -5,9 +5,8 @@ import itertools
 from collections import OrderedDict
 
 
-def compute_metrics(processors, language, key, token_list):
-    """use processors to compute the metrics.
-    """
+def compute_file_metrics(processors, language, key, token_list):
+    """use processors to compute file metrics."""
     # multiply iterator
     tli = itertools.tee(token_list, len(processors))
     metrics = OrderedDict()

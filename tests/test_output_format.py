@@ -4,10 +4,11 @@ import os
 
 import pytest
 
-from metrics.metrics_utils import process_files, format
+from metrics.metrics_utils import process_file_metrics, format
 from metrics.sloc import SLOCMetric
 from metrics.mccabe import McCabeMetric
 from metrics.position import PosMetric
+from metrics import outputformat_json
 
 
 @pytest.mark.parametrize('in_file, fmt, sloc, comments, ratio, mccabe, language', [
@@ -26,7 +27,7 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
     context['output_format'] = fmt
 
     file_processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)]
-    result = process_files(context, file_processors)
+    result = process_file_metrics(context, file_processors)
 
     if fmt == 'csv':
         expected = \
@@ -64,3 +65,18 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
 
     print(format(result, {}, fmt))
     assert format(result, {}, fmt) == expected
+
+
+def test_output_format_json():
+    metrics = outputformat_json.format({'file': 'metrics'}, {'build': 'metrics'})
+
+    assert metrics == (
+        '{\n' +
+        '    "build": {\n' +
+        '        "build": "metrics"\n' +
+        '    },\n' +
+        '    "files": {\n' +
+        '        "file": "metrics"\n' +
+        '    }\n' +
+        '}\n'
+    )

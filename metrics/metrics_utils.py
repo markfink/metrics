@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, print_function
 import sys
 import json
+from json.decoder import JSONDecodeError
 import logging
 from collections import OrderedDict
 
@@ -9,7 +10,7 @@ import pathspec
 from pathlib2 import PurePath, Path
 from pygments.lexers import guess_lexer_for_filename
 
-from .compute import compute_metrics
+from .compute import compute_file_metrics
 from . import outputformat_csv
 from . import outputformat_xml
 from . import outputformat_json
@@ -28,6 +29,8 @@ def load_metrics_from_file(filename):
                 metrics['build'] = {}
             return metrics
     except FileNotFoundError:
+        return None
+    except JSONDecodeError:
         return None
 
 
@@ -103,7 +106,7 @@ def format(file_metrics, build_metrics, format):
     return formatter.format(file_metrics, build_metrics)
 
 
-def process_files(context, file_processors):
+def process_file_metrics(context, file_processors):
     """Main routine for metrics."""
     file_metrics = OrderedDict()
 
@@ -125,13 +128,28 @@ def process_files(context, file_processors):
                 token_list = lex.get_tokens(code)  # parse code
 
                 file_metrics[key] = OrderedDict()
-                file_metrics[key].update(compute_metrics(file_processors, lex.name, key, token_list))
+                file_metrics[key].update(compute_file_metrics(file_processors, lex.name, key, token_list))
                 file_metrics[key]['language'] = lex.name
 
         except IOError as e:
             sys.stderr.writelines(str(e) + " -- Skipping input file.\n\n")
 
-    return file_metrics#, build_metrics
+    return file_metrics
+
+
+def process_build_metrics(context, build_processors):
+    """use processors to collect build metrics."""
+    build_metrics = OrderedDict()
+
+    # reset all processors
+    for p in build_processors:
+        p.reset()
+
+    # collect metrics from all processors
+    for p in build_processors:
+        build_metrics.update(p.build_metrics)
+
+    return build_metrics
 
 
 def summary(processors, metrics, context):

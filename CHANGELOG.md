@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - improved plugin mechanism (now manage plugins via pip)
 - saves metrics to .metrics file by default (in JSON format)
 - load info from last run to context so plugins can use it
+- added build level metrics
 #### Changed
 - XML output: moved "files" -element and new "build" -element under "metrics" 
 #### Removed
