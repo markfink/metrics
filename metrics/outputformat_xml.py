@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 PY3 = sys.version_info[0] >= 3
 
 
-def format(metrics):
+def format(file_metrics, build_metrics):
     """compute output in XML format."""
     def indent(elem, level=0):
         i = "\n" + level*"  "
@@ -30,16 +30,26 @@ def format(metrics):
             if level and (not elem.tail or not elem.tail.strip()):
                 elem.tail = i
 
-    root = ET.Element('files')
+    root = ET.Element('metrics')
 
-    for key in metrics.keys():
-        tmp_file = ET.SubElement(root, "file",
-            {'name': key, 'language': metrics[key]['language']})
-        for name in metrics[key].keys():
+    # file_metrics
+    files = ET.Element('files')
+    root.append(files)
+
+    for key in file_metrics.keys():
+        tmp_file = ET.SubElement(files, "file",
+                                 {'name': key, 'language': file_metrics[key]['language']})
+        for name in file_metrics[key].keys():
             if name == 'language':
                 continue
             tmp_metric = ET.SubElement(tmp_file, "metric",
-                {'name': name, 'value': str(metrics[key][name])})
+                                       {'name': name, 'value': str(file_metrics[key][name])})
+
+    # build_metrics
+    if build_metrics:
+        build = ET.Element('build')
+        root.append(build)
+        # TODO
 
     indent(root)
     if PY3:

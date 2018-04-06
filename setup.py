@@ -25,7 +25,7 @@ dependency_links = [x.strip().replace('git+', '') for x in all_reqs if 'git+' no
 setup(
     name='metrics',
     version=__version__,
-    description='metrics for C, C++, Javascript, and Python programs',
+    description='metrics for Python, C, C++, Go and Javascript code (plugins for pylint, pytest-cov, and git available)',
     long_description=long_description,
     license='MIT',
     url='https://github.com/finklabs/metrics/',
@@ -43,7 +43,7 @@ setup(
     author='Mark Fink',
     install_requires=install_requires,
     dependency_links=dependency_links,
-    author_email='mark@finklabs.de',
+    author_email='mark@mark-fink.de',
     entry_points={
         'console_scripts': [
             'metrics = metrics.metrics:main'

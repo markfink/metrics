@@ -3,12 +3,18 @@ from __future__ import unicode_literals, print_function
 import os
 import fnmatch
 import logging
+import tempfile
+from shutil import copyfile
 
-from metrics.metrics_utils import glob_files
+import pytest
+
+from metrics.metrics_utils import glob_files, load_metrics_from_file
+from metrics import METRICS_FILENAME
+
 from . import here
 
-ROOT_DIR = here('./resources/static_files')
 
+ROOT_DIR = here('./resources/static_files')
 log = logging.getLogger(__name__)
 
 
@@ -47,9 +53,9 @@ def test_exclude_file():
     ]
 
 
-def test_exclude_file_with_gcdtignore():
+def test_exclude_file_with_gitignore():
     result = glob_files(ROOT_DIR, ['a/**'],
-                        gcdtignore=['aa.txt'])
+                        gitignore=['aa.txt'])
     assert list(result) == [
         (ROOT_DIR + '/a/ab.txt', 'a/ab.txt')
     ]
@@ -59,3 +65,32 @@ def test_how_crazy_is_it():
     f = '/a/b/c/d.txt'
     p = '/a/**/d.txt'
     assert fnmatch.fnmatchcase(f, p)
+
+
+@pytest.fixture
+def tempfolder():
+    """setup tempfolder with .metrics file and cd into it."""
+    curr_dir = os.getcwd()
+    with tempfile.TemporaryDirectory() as temp:
+        os.chdir(temp)
+        yield
+        os.chdir(curr_dir)
+
+
+@pytest.fixture
+def metrics_info(tempfolder):
+    """copy .metrics file to tempfolder."""
+    copyfile(here('resources/' + METRICS_FILENAME),
+             METRICS_FILENAME)
+
+
+def test_load_metrics_from_file(metrics_info):
+    data = load_metrics_from_file(METRICS_FILENAME)
+    assert 'files' in data
+    assert 'build' in data
+    assert len(data['files'].items()) > 20
+
+
+def test_load_metrics_from_file_no_file(tempfolder):
+    data = load_metrics_from_file(METRICS_FILENAME)
+    assert data == {}

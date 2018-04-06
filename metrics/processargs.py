@@ -60,14 +60,6 @@ class ProcessArgs( object ):
                           dest="in_file_list",
                           default=self.in_file_list,
                           help="File containing list of path names to modules for analysis." )
-        parser.add_option("-i", "--include",
-                          dest="include_metrics_str",
-                          default=self.include_metrics_str,
-                          help="list of metrics to include in run. This is a comma separated list of metric module names with no whitespace. Optionally, you can specify the class name of the metric by following the module name with a colon (:) and the metric class name. (Default metrics are 'mccabe:McCabeMetric,sloc:SLOCMetric'. Default metric class name for metric module 'wxYz' is 'WxYzMetric' when only module name given -- note capitalized metric class name.)" )
-        parser.add_option("-l", "--library",
-                          dest="lib_name",
-                          default=self.lib_name,
-                          help="user-defined name applied to collection of modules (Default is '')" )
         parser.add_option("-q", "--quiet",
                           action="store_true",
                           dest="quiet",
@@ -76,7 +68,7 @@ class ProcessArgs( object ):
         parser.add_option("--format",
                           dest="output_format_str",
                           default = self.output_format,
-                          choices = ["xml", "csv"],
+                          choices = ["xml", "csv", "json"],
                           help="Choose an output format for a parser to read. Valid choices: xml, csv")
 
         # parse the command line/arguments for this instance
