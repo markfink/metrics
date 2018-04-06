@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from metrics.metrics_utils import process_files
+from metrics.metrics_utils import process_file_metrics
 from metrics.sloc import SLOCMetric
 from metrics.mccabe import McCabeMetric
 from metrics.position import PosMetric
@@ -27,7 +27,7 @@ def test_code_sample(in_file, sloc, comments, ratio, mccabe, language):
 
 
     file_processors = [SLOCMetric(context), McCabeMetric(context), PosMetric(context)]
-    result = process_files(context, file_processors)
+    result = process_file_metrics(context, file_processors)
     first_key = list(result.keys())[0]
     first_value = list(result.values())[0]
     assert first_key == in_file

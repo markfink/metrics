@@ -93,4 +93,4 @@ def test_load_metrics_from_file(metrics_info):
 
 def test_load_metrics_from_file_no_file(tempfolder):
     data = load_metrics_from_file(METRICS_FILENAME)
-    assert data is None
+    assert data == {}
