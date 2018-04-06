@@ -2,7 +2,6 @@
 from __future__ import unicode_literals, print_function
 import sys
 import json
-from json.decoder import JSONDecodeError
 import logging
 from collections import OrderedDict
 
@@ -17,6 +16,14 @@ from . import outputformat_json
 
 
 log = logging.getLogger(__name__)
+PY3 = sys.version_info[0] >= 3
+
+if PY3:
+    from json.decoder import JSONDecodeError
+else:
+    # python 2 compatibility
+    FileNotFoundError = IOError
+    JSONDecodeError = ValueError
 
 
 def load_metrics_from_file(filename):
@@ -29,9 +36,9 @@ def load_metrics_from_file(filename):
                 metrics['build'] = {}
             return metrics
     except FileNotFoundError:
-        return None
+        return {}
     except JSONDecodeError:
-        return None
+        return {}
 
 
 # based on: https://github.com/finklabs/botodeploy/blob/master/botodeploy/utils_static.py
