@@ -43,7 +43,7 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
            '      <metric name="comments" value="46" />\n' +
            '      <metric name="ratio_comment_to_code" value="0.03" />\n' +
            '      <metric name="mccabe" value="169" />\n' +
-           '      <metric name="positions" value="[]" />\n' +
+           '      <metric name="block_positions" value="[]" />\n' +
            '    </file>\n' +
            '  </files>\n' +
            '</metrics>\n')
@@ -53,10 +53,10 @@ def test_code_sample(in_file, fmt, sloc, comments, ratio, mccabe, language):
             '{\n' +
             '    "files": {\n' +
             '        "tests/resources/code_samples/js1.js": {\n' +
+            '            "block_positions": [],\n' +
             '            "comments": 46,\n' +
             '            "language": "JavaScript",\n' +
             '            "mccabe": 169,\n' +
-            '            "positions": [],\n' +
             '            "ratio_comment_to_code": 0.03,\n' +
             '            "sloc": 1446\n' +
             '        }\n' +

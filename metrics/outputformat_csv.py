@@ -13,14 +13,14 @@ def format(file_metrics, build_metrics):
     def report_header(file_metrics):
         values = list(file_metrics.values())[0]
         print(values)
-        values.pop('positions', None)
+        values.pop('block_positions', None)
         return 'filename,' + ','.join(values) + '\n'
 
     def report_metrics(file_metrics):
         report = ''
         for key, values in file_metrics.items():
             report += key + ','
-            report += ','.join([str(v) for k, v in values.items() if k not in ['positions']])
+            report += ','.join([str(v) for k, v in values.items() if k not in ['block_positions']])
             report += '\n'
         return report
 

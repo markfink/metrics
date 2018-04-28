@@ -85,7 +85,7 @@ def test_lexer_on_cpp_class():
     positions.language = 'C++'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == {'positions': [{
+    assert positions.metrics == {'block_positions': [{
         'type': 'Class',
         'name': 'Rectangle',
         'start': 3,

@@ -139,7 +139,7 @@ class PosMetric(MetricBase):
                 for m in p['methods']:
                     if m['end'] > p['end']:
                         p['end'] = m['end']
-        return {'positions': self._positions}
+        return {'block_positions': self._positions}
 
     metrics = property(get_metrics)
 

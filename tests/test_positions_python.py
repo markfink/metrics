@@ -46,7 +46,7 @@ def test_with_python_global_code():
     positions.language = 'Python'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == {'positions': []}
+    assert positions.metrics == {'block_positions': []}
 
 
 def test_with_python_function():
@@ -72,7 +72,7 @@ def test_with_python_function():
     for t in tokens:
         positions.process_token(t)
     assert positions.metrics == \
-        {'positions': [{'type': 'Function', 'name': 'my_func', 'start': 1, 'end': 3}]}
+        {'block_positions': [{'type': 'Function', 'name': 'my_func', 'start': 1, 'end': 3}]}
 
 
 def test_with_python_class():
@@ -114,7 +114,7 @@ def test_with_python_class():
     positions.language = 'Python'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == {'positions': [
+    assert positions.metrics == {'block_positions': [
         {
         'type': 'Class',
         'name': 'MyClass',
