@@ -101,22 +101,22 @@ Sample ".metrics" file results (with plugins installed)
 {
     "build": {
         "active_branch": "master",
-        "committed_datetime": "2018-04-28T11:52:37+02:00",
-        "committed_ts": 1524909157,
+        "committed_datetime": "2018-04-28T12:19:14+02:00",
+        "committed_ts": 1524910754,
         "committers": [
             "mark"
         ],
         "origin": "git@github.com:markfink/metrics.gitinfo.git",
-        "sha": "f7ba6f27ee8c34991acd3cd6ef14c8bd6ed9c34e",
-        "sha_start": "7d04ffd8c2acbbfa24977dc6c7b51f34636e34de",
-        "summary": "Bump version: 0.0.3 \u2192 0.0.4",
-        "version": "0.0.4"
+        "sha": "4c355c2f6ffef88252e565f6ef5006468e410187",
+        "sha_start": "f7ba6f27ee8c34991acd3cd6ef14c8bd6ed9c34e",
+        "summary": "Bump version: 0.0.4 \u2192 0.0.5",
+        "version": "0.0.5"
     },
     "files": {
         "metrics_gitinfo/__init__.py": {
-            "age_days": 25.80023148148148,
+            "age_days": 25.81871527777778,
             "block_positions": [],
-            "change_frequency": 5,
+            "change_frequency": 6,
             "comments": 1,
             "committers_count": 1,
             "language": "Python",
@@ -129,10 +129,12 @@ Sample ".metrics" file results (with plugins installed)
             "mccabe": 0,
             "pylint_score": 5.0,
             "ratio_comment_to_code": 0.5,
-            "sloc": 2
+            "sloc": 2,
+            "test_coverage": 0.0,
+            "test_missing": "2-3"
         },
         "metrics_gitinfo/file_info.py": {
-            "age_days": 0.0008333333333333334,
+            "age_days": 0.01931712962962963,
             "block_positions": [
                 {
                     "end": 17,
@@ -148,10 +150,12 @@ Sample ".metrics" file results (with plugins installed)
             "mccabe": 1,
             "pylint_score": 10.0,
             "ratio_comment_to_code": 0.44,
-            "sloc": 9
+            "sloc": 9,
+            "test_coverage": 0.0,
+            "test_missing": "2-17"
         },
         "metrics_gitinfo/git_diff_muncher.py": {
-            "age_days": 24.042083333333334,
+            "age_days": 24.06056712962963,
             "block_positions": [
                 {
                     "end": 17,
@@ -179,10 +183,12 @@ Sample ".metrics" file results (with plugins installed)
             "mccabe": 15,
             "pylint_score": 9.56,
             "ratio_comment_to_code": 1.02,
-            "sloc": 49
+            "sloc": 49,
+            "test_coverage": 0.0,
+            "test_missing": "2-129"
         },
         "metrics_gitinfo/gitinfo.py": {
-            "age_days": 25.80023148148148,
+            "age_days": 25.81871527777778,
             "block_positions": [
                 {
                     "end": 17,
@@ -247,40 +253,27 @@ Sample ".metrics" file results (with plugins installed)
                     "type": "Class"
                 }
             ],
-            "change_frequency": 6,
+            "change_frequency": 7,
             "comments": 9,
             "committers_count": 1,
             "language": "Python",
             "lines_added": [
-                88,
-                89,
-                90,
-                91
+                96
             ],
             "lines_deleted": [
-                10,
-                64,
-                88,
-                89,
-                90,
-                91,
-                92,
-                93,
+                66,
                 94,
-                95,
-                96,
-                97,
-                98,
-                99,
-                100
+                97
             ],
             "mccabe": 8,
             "pylint_score": 9.06,
             "ratio_comment_to_code": 0.11,
-            "sloc": 83
+            "sloc": 83,
+            "test_coverage": 0.0,
+            "test_missing": "2-113"
         },
         "tests/__init__.py": {
-            "age_days": 24.08150462962963,
+            "age_days": 24.099988425925925,
             "block_positions": [
                 {
                     "end": 10,
@@ -296,10 +289,12 @@ Sample ".metrics" file results (with plugins installed)
             "mccabe": 0,
             "pylint_score": 3.33,
             "ratio_comment_to_code": 0.17,
-            "sloc": 6
+            "sloc": 6,
+            "test_coverage": 83.33,
+            "test_missing": "10"
         },
         "tests/test_metrics_gitinfo.py": {
-            "age_days": 22.07342592592593,
+            "age_days": 22.091909722222223,
             "block_positions": [
                 {
                     "end": 19,
@@ -333,7 +328,8 @@ Sample ".metrics" file results (with plugins installed)
             "mccabe": 6,
             "pylint_score": 4.64,
             "ratio_comment_to_code": 0.07,
-            "sloc": 29
+            "sloc": 29,
+            "test_coverage": 100.0
         }
     }
 }
