@@ -4,20 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-### [0.3.3] - 2018-08-28
+### [0.3.3] - 2018-04-28
 #### Changed
 - updated .metrics file contents sample
 
-### [0.3.2] - 2018-08-28
+### [0.3.2] - 2018-04-28
 #### Added
 - added .metrics file contents sample to README
 
-### [0.3.1] - 2018-08-28
+### [0.3.1] - 2018-04-28
 #### Changed
 - renamed positions to block_positions
 - use .gitignore file in globbing
 
-### [0.3.0] - 2018-08-08
+### [0.3.0] - 2018-04-08
 #### Added
 - positions of functions and classes per file for JS, Go, Python, C++
 - new JSON output 
