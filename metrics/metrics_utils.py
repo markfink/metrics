@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function
+import os.path
 import sys
 import json
 import logging
@@ -118,7 +119,12 @@ def process_file_metrics(context, file_processors):
     file_metrics = OrderedDict()
 
     # TODO make available the includes and excludes feature
-    in_files = glob_files(context['root_dir'], context['in_file_names'])
+    gitignore = []
+    if os.path.isfile('.gitignore'):
+        with open('.gitignore', 'r') as ifile:
+            gitignore = ifile.read().splitlines()
+
+    in_files = glob_files(context['root_dir'], context['in_file_names'], gitignore=gitignore)
     # main loop
     for in_file, key in in_files:
         # print 'file %i: %s' % (i, in_file)

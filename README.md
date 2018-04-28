@@ -95,6 +95,251 @@ Please visit the plugin page for details:
 * [test coverage](https://github.com/markfink/metrics.pytest-cov)
 
 
+Sample ".metrics" file results (with plugins installed)
+
+``` json
+{
+    "build": {
+        "active_branch": "master",
+        "committed_datetime": "2018-04-28T11:52:37+02:00",
+        "committed_ts": 1524909157,
+        "committers": [
+            "mark"
+        ],
+        "origin": "git@github.com:markfink/metrics.gitinfo.git",
+        "sha": "f7ba6f27ee8c34991acd3cd6ef14c8bd6ed9c34e",
+        "sha_start": "7d04ffd8c2acbbfa24977dc6c7b51f34636e34de",
+        "summary": "Bump version: 0.0.3 \u2192 0.0.4",
+        "version": "0.0.4"
+    },
+    "files": {
+        "metrics_gitinfo/__init__.py": {
+            "age_days": 25.80023148148148,
+            "block_positions": [],
+            "change_frequency": 5,
+            "comments": 1,
+            "committers_count": 1,
+            "language": "Python",
+            "lines_added": [
+                3
+            ],
+            "lines_deleted": [
+                3
+            ],
+            "mccabe": 0,
+            "pylint_score": 5.0,
+            "ratio_comment_to_code": 0.5,
+            "sloc": 2
+        },
+        "metrics_gitinfo/file_info.py": {
+            "age_days": 0.0008333333333333334,
+            "block_positions": [
+                {
+                    "end": 17,
+                    "name": "get_file_info",
+                    "start": 5,
+                    "type": "Function"
+                }
+            ],
+            "change_frequency": 1,
+            "comments": 4,
+            "committers_count": 1,
+            "language": "Python",
+            "mccabe": 1,
+            "pylint_score": 10.0,
+            "ratio_comment_to_code": 0.44,
+            "sloc": 9
+        },
+        "metrics_gitinfo/git_diff_muncher.py": {
+            "age_days": 24.042083333333334,
+            "block_positions": [
+                {
+                    "end": 17,
+                    "name": "GitDiffError",
+                    "start": 10,
+                    "type": "Class"
+                },
+                {
+                    "end": 81,
+                    "name": "parse_diff_lines",
+                    "start": 18,
+                    "type": "Function"
+                },
+                {
+                    "end": 111,
+                    "name": "_parse_hunk_line",
+                    "start": 82,
+                    "type": "Function"
+                }
+            ],
+            "change_frequency": 1,
+            "comments": 50,
+            "committers_count": 1,
+            "language": "Python",
+            "mccabe": 15,
+            "pylint_score": 9.56,
+            "ratio_comment_to_code": 1.02,
+            "sloc": 49
+        },
+        "metrics_gitinfo/gitinfo.py": {
+            "age_days": 25.80023148148148,
+            "block_positions": [
+                {
+                    "end": 17,
+                    "name": "get_file_processors",
+                    "start": 13,
+                    "type": "Function"
+                },
+                {
+                    "end": 22,
+                    "name": "get_build_processors",
+                    "start": 18,
+                    "type": "Function"
+                },
+                {
+                    "end": 113,
+                    "methods": [
+                        {
+                            "end": 35,
+                            "name": "_get_commits_contained",
+                            "start": 31,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 41,
+                            "name": "_get_source_target",
+                            "start": 36,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 56,
+                            "name": "_extract_info",
+                            "start": 52,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 88,
+                            "name": "reset",
+                            "start": 84,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 105,
+                            "name": "process_file",
+                            "start": 89,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 108,
+                            "name": "get_metrics",
+                            "start": 106,
+                            "type": "Function"
+                        },
+                        {
+                            "end": 113,
+                            "name": "get_build_metrics",
+                            "start": 109,
+                            "type": "Function"
+                        }
+                    ],
+                    "name": "GitMetric",
+                    "start": 23,
+                    "type": "Class"
+                }
+            ],
+            "change_frequency": 6,
+            "comments": 9,
+            "committers_count": 1,
+            "language": "Python",
+            "lines_added": [
+                88,
+                89,
+                90,
+                91
+            ],
+            "lines_deleted": [
+                10,
+                64,
+                88,
+                89,
+                90,
+                91,
+                92,
+                93,
+                94,
+                95,
+                96,
+                97,
+                98,
+                99,
+                100
+            ],
+            "mccabe": 8,
+            "pylint_score": 9.06,
+            "ratio_comment_to_code": 0.11,
+            "sloc": 83
+        },
+        "tests/__init__.py": {
+            "age_days": 24.08150462962963,
+            "block_positions": [
+                {
+                    "end": 10,
+                    "name": "here",
+                    "start": 9,
+                    "type": "Function"
+                }
+            ],
+            "change_frequency": 1,
+            "comments": 1,
+            "committers_count": 1,
+            "language": "Python",
+            "mccabe": 0,
+            "pylint_score": 3.33,
+            "ratio_comment_to_code": 0.17,
+            "sloc": 6
+        },
+        "tests/test_metrics_gitinfo.py": {
+            "age_days": 22.07342592592593,
+            "block_positions": [
+                {
+                    "end": 19,
+                    "name": "tempfolder",
+                    "start": 11,
+                    "type": "Function"
+                },
+                {
+                    "end": 29,
+                    "name": "test_metrics_gitinfo_no_git_repo",
+                    "start": 20,
+                    "type": "Function"
+                },
+                {
+                    "end": 39,
+                    "name": "test_metrics_gitinfo",
+                    "start": 30,
+                    "type": "Function"
+                },
+                {
+                    "end": 47,
+                    "name": "test_metrics_gitinfo_no_lastrun",
+                    "start": 40,
+                    "type": "Function"
+                }
+            ],
+            "change_frequency": 1,
+            "comments": 2,
+            "committers_count": 1,
+            "language": "Python",
+            "mccabe": 6,
+            "pylint_score": 4.64,
+            "ratio_comment_to_code": 0.07,
+            "sloc": 29
+        }
+    }
+}
+```
+
+
 # Acknowledgements
 
 * codebase originally based on grop.py by Jurgen Hermann (2001)

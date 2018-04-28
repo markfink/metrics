@@ -108,7 +108,7 @@ def test_lexer_on_go_code():
     positions.language = 'Go'
     for t in tokens:
         positions.process_token(t)
-    assert positions.metrics == {'positions': [
+    assert positions.metrics == {'block_positions': [
         {'type': 'Interface', 'name': 'Animal', 'start': 1, 'end': 3},
         {'type': 'Struct', 'name': 'Dog', 'start': 5, 'end': 5},
         {'type': 'Function', 'name': 'Name', 'start': 7, 'end': 9},

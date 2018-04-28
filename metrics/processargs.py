@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import sys
 from optparse import OptionParser, BadOptionError
 
+from . import __version__
+
 usage_str = """python metrics [ options ] pgm1.ex1 [ pgm2.ex2 ... ]
 
 Metrics are computed for the source code files
@@ -54,7 +56,7 @@ class ProcessArgs( object ):
         del( self.__dict__['pKwds'] ) # remove redundant pKwds in self.__dict__
 
         # set up option parser
-        parser = MyOptionParser( '', version="%prog 0.8.1" )
+        parser = MyOptionParser('', version="%prog " + __version__)
 
         parser.add_option("-f", "--files",
                           dest="in_file_list",
@@ -69,7 +71,7 @@ class ProcessArgs( object ):
                           dest="output_format_str",
                           default = self.output_format,
                           choices = ["xml", "csv", "json"],
-                          help="Choose an output format for a parser to read. Valid choices: xml, csv")
+                          help="Choose an output format for a parser to read. Valid choices: xml, csv, json")
 
         # parse the command line/arguments for this instance
         try:
