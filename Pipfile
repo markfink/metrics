@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+setuptools = ">=36.3.0"
+pep8 = ">=1.7.0"
+pylint = ">=1.7.2"
+bumpversion = ">=0.5.3"
+pypandoc = ">=1.4"
+
+[packages]
+pathspec = "==0.5.5"
+pathlib2 = ">=2.3.0"
+Pygments = "==2.2.0"
+
+[requires]
+python_version = "3.5"
